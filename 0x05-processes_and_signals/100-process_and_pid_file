@@ -8,11 +8,11 @@
 #+  receiving a SIGQUIT or SIGTERM.
 
 terminator() {
-  rm /var/run/holbertonscript.pid
+  rm /var/run/mycript.pid
   exit
 }
 
-echo "$$" > /var/run/holbertonscript.pid
+echo "$$" > /var/run/myscript.pid
 
 while true
 do
