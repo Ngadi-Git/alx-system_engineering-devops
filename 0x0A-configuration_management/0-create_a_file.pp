@@ -1,10 +1,9 @@
-# Create a file in /tmp
-
-file { 'holberton':
-  ensure  => 'present',
-  content => 'I love Puppet',
-  group   => 'www-data',
+# creates /tmp/holberton file with content
+file { '/tmp/holberton':
+  ensure  => file,
+  path    => '/tmp/holberton',
   mode    => '0744',
   owner   => 'www-data',
-  path    => '/tmp/holberton',
+  group   => 'www-data',
+  content => 'I love Puppet'
 }
