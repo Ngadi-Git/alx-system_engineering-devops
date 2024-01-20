@@ -1,8 +1,10 @@
-# Create temporary file called holberton
-file { '/tmp/holberton':
+# Create a file in /tmp
+
+file { 'holberton':
   ensure  => 'present',
-  owner   => 'www-data',
+  content => 'I love Puppet',
   group   => 'www-data',
   mode    => '0744',
-  content => 'I love Puppet'
+  owner   => 'www-data',
+  path    => '/tmp/holberton',
 }
