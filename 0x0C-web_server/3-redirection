@@ -1,32 +1,36 @@
 #!/usr/bin/env bash
-# Install and setup new nginx server
+# Configures a new ubuntu machine by installing
+# Nginx where it should be listening on port 80
+# Serve a page that would return a Hello World string
+#
 
-apt-get update -y && \
-apt-get install -y nginx
-if [ $? -eq 0 ]
-then
-    service nginx start
-    echo -e \
-"http {
-    root /var/www/holberton;
-    server {
-        listen 80;
-        server_name pearmountain.space;
-        rewrite ^/redirect_me/? \
-https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;
-        location / {
-            index index.html;
-        }
-    }
-}
-events {
-}" > /etc/nginx/nginx.conf
-    mkdir -p /var/www/holberton
-    echo "Holberton School" > \
-	/var/www/holberton/index.html
-    service nginx restart
-else
-    echo "Could not install nginx"
-    exit 1
-fi
-exit 0
+
+echo -e "Updating and installing Nginx.\n"
+sudo apt-get update -y -qq && \
+         sudo apt-get install nginx -y
+
+echo -e "\nSetting up some minor stuff.\n"
+
+# starting nginx service
+sudo service nginx start
+
+# allowing nginx on firewall
+sudo ufw allow 'Nginx HTTP'
+
+# Give the user ownership to website files for easy editing
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R 755 /var/www
+
+# Backup default index
+cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
+
+# Creating new index
+echo -e "Hello World!" > /var/www/html/index.nginx-debian.html
+
+# Setting up /redirect_me to a youtube video
+sudo sed -i '24i\       rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
+
+# Restarting nginx
+sudo service nginx restart
+
+echo -e "\nCompleted.\n"
