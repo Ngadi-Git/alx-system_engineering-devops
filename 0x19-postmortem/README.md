@@ -19,9 +19,9 @@ This postmortem serves to identify the root cause of the API infrastructure outa
 * **10:30 PM GMT:** API performance returned to normal levels, and all services were fully operational.
 
 ## Resolution
-A scheduled database maintenance window included a configuration change intended to optimize database performance.  However, due to a human error in the configuration script, the API gateway received requests in an unexpected format. This overwhelmed the gateway's processing capabilities, causing it to queue and backlog requests, leading to the observed slowness and errors.
+- A scheduled database maintenance window included a configuration change intended to optimize database performance.  However, due to a human error in the configuration script, the API gateway received requests in an unexpected format. This overwhelmed the gateway's processing capabilities, causing it to queue and backlog requests, leading to the observed slowness and errors.
 
-The resolution involved identifying the faulty configuration script and reverting it to the previous version. This restored the API gateway's  ability to handle requests efficiently.
+- The resolution involved identifying the faulty configuration script and reverting it to the previous version. This restored the API gateway's  ability to handle requests efficiently.
 
 ## Corrective and Preventative Measures:
 
@@ -29,4 +29,3 @@ The resolution involved identifying the faulty configuration script and revertin
 * **Automated Testing:** Develop automated tests for API gateway configurations to identify potential issues before deployment.
 * **Monitoring Enhancements:** Implement additional monitoring on the API gateway to detect configuration errors and resource bottlenecks more quickly.
 * **Incident Response Training:** Conduct regular training sessions for the engineering team to improve communication and collaboration during incident response situations.
-
