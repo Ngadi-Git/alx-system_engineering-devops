@@ -1,15 +1,17 @@
 #!/usr/bin/python3
-# Finds total subscribers to a subreddit
+"""A script that gets the number of subscribers for a subreddit"""
+import json
 import requests
 
 
 def number_of_subscribers(subreddit):
-    '''Function that returns total subscriber number'''
-    URL = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
-    USERAGENT = {'User-Agent':
-                 'Unix:com.holberton.apiadvanced:task0 (by /u/_marc_marc_)'}
-    req = requests.get(URL, headers=USERAGENT)
-    if req.status_code is not 200:
-        return (0)
-    jreq = req.json()
-    return (jreq['data']['subscribers'])
+    """Function that requests the number of subscribers for a subreddit"""
+
+    URL = "https://www.reddit.com/r/{}/about.json".format(subreddit)
+    USER_AGENT = "com.holbertonschool.myredditscript:0.0.1 (by /u/dmaring)"
+    headers = {'User-Agent': USER_AGENT}
+    r = requests.get(URL, headers=headers)
+    if (r.status_code is not 200):
+        return(0)
+    r = r.json()
+    return(r['data']['subscribers'])
