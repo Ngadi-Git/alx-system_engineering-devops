@@ -1,17 +1,19 @@
 #!/usr/bin/python3
-"""A script that gets the number of subscribers for a subreddit"""
-import json
+""" Function that queries the Reddit API """
 import requests
+import sys
 
 
 def number_of_subscribers(subreddit):
-    """Function that requests the number of subscribers for a subreddit"""
+    """  Args:
+        subreddit: subreddit name
+    Returns:
+        number of subscribers to the subreddit,
+        or 0 if subreddit requested is invalid"""
+    headers = {'User-Agent': 'xica369'}
+    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
+    response = requests.get(url, headers=headers, allow_redirects=False)
 
-    URL = "https://www.reddit.com/r/{}/about.json".format(subreddit)
-    USER_AGENT = "com.holbertonschool.myredditscript:0.0.1 (by /u/dmaring)"
-    headers = {'User-Agent': USER_AGENT}
-    r = requests.get(URL, headers=headers)
-    if (r.status_code is not 200):
-        return(0)
-    r = r.json()
-    return(r['data']['subscribers'])
+    if response.status_code == 200:
+        return (response.json().get("data").get("subscribers"))
+    return (0)
